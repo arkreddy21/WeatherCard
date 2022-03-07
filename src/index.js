@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {AppProvider} from "./context";
+import {MantineProvider} from "@mantine/core";
 
 ReactDOM.render(
   // use strict mode if needed
   <AppProvider>
-    <App />
+    <MantineProvider theme={{ colorScheme: 'light' }}>
+      <App />
+    </MantineProvider>
   </AppProvider>,
   document.getElementById('root')
 );

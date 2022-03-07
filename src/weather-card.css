@@ -1,0 +1,39 @@
+
+.weather-card {
+    background-color: aliceblue;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+
+.current-weather-grid > div {
+    position: relative;
+    border-style: solid;
+    border-color: blueviolet;
+    border-width: 2px;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.current-weather-grid > div > .label {
+    position: absolute;
+    top: 60px;
+    left: 90px;
+    color: gray;
+}
+
+.current-weather-grid > div > .value {
+    font-size: x-large;
+    font-weight: 700;
+    position: absolute;
+    top: 15px;
+    left: 90px;
+}
+
+.FakeLine {
+    /*width: 1200px;*/
+    /*height: 350px;*/
+    /*overflow: scroll;*/
+    overflow-x: scroll;
+    /*overflow-y: scroll;*/
+}

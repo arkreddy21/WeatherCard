@@ -1,38 +1,80 @@
 .App {
-  text-align: center;
+    position: relative;
+    /*text-align: center;*/
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    position: relative;
+    background-color: blueviolet;
+    height: 95px;
+    display: flex;
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    padding-left: 10px;
+    padding-bottom: 10px;
+    /*font-size: calc(10px + 2vmin);*/
+    /*color: white;*/
+    border-radius: 8px;
+}
+
+
+#searchform {
+    /*display: flex;*/
+    width: 400px;
+    position: absolute;
+    top: 10px;
+    right: 80px;
+}
+
+.mantine-Button-root {
+    position: absolute;
+    top: 20px;
+    left: 310px;
+    margin-block-start: 8px;
+    padding: 6px;
+}
+.mantine-Button-label {
+    position: relative;
+    bottom: 1px;
+    right: 2px;
+}
+
+.app {
+    /*background-color: #EEF4FA;*/
+}
+
+footer {
+    border-style: solid;
+    margin-top: 5px;
+    padding: 5px;
+    color: blueviolet;
+    background-color: aqua;
+    position: sticky;
+    bottom: 0;
+    z-index: -1;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
