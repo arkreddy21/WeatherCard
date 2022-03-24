@@ -1,9 +1,7 @@
 import React from "react"
 import {useGlobalContext} from "./context";
-import {Text, Title, SimpleGrid} from "@mantine/core";
-import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement,
-  Title as CTitle, Tooltip, Legend,} from 'chart.js';
-import {Line} from "react-chartjs-2"
+import {Text, Title, SimpleGrid, Space} from "@mantine/core";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import "./weather-card.css"
 import uvi from "./icons/uvi.svg"
 //import faker from "@faker-js/faker";
@@ -14,19 +12,22 @@ export function WeatherCard() {
   return (<div className="weather-card">
     <CurrentWeather/>
     <HourlyWeather/>
+    <WeeklyWeather/>
   </div>)
 }
 
 function CurrentWeather() {
   const {weatherData, currentLocale} = useGlobalContext()
+  var imgUrl = `https://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}@2x.png`
 
-  //TODO: change icon according to weather. display weather condition
+
   return (<>
     <Title order={1}>{currentLocale}</Title>
-    {/*<p>temperature: {'current' in weatherData ? weatherData.current.temp : ''}</p>*/}
-    <img src="https://img.icons8.com/office/80/000000/fog-day--v2.png"/>
-    {/* try changing png to gif */}
-
+    <div className="mainInfo">
+      <img src={`https://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}@4x.png`} />
+      <Title order={3} className="value">{`${weatherData.current.temp}\u00B0C`}</Title>
+      <Title order={3} className="desc">{weatherData.current.weather[0].description}</Title>
+    </div>
 
     <SimpleGrid
       breakpoints={[
@@ -36,34 +37,34 @@ function CurrentWeather() {
       ]}
       className="current-weather-grid" cols={3} spacing="md">
 
-      <div>
+      {/*<div>
         <img src="https://img.icons8.com/office/80/000000/thermometer.png"/>
         <Text className="label" >Temperature</Text>
-        <Text className="value">{weatherData.current.temp}</Text>
-      </div>
+        <Text className="value">{`${weatherData.current.temp}\u00B0C`}</Text>
+      </div>*/}
 
       <div>
         <img src="https://img.icons8.com/office/80/000000/temperature-outside.png"/>
         <Text className="label">Feels like</Text>
-        <Text className="value">{weatherData.current.feels_like}</Text>
+        <Text className="value">{`${weatherData.current.feels_like}\u00B0C`}</Text>
       </div>
 
       <div>
         <img src="https://img.icons8.com/office/80/000000/barometer-gauge.png"/>
         <Text className="label" >Pressure</Text>
-        <Text className="value">{weatherData.current.pressure}</Text>
+        <Text className="value">{`${weatherData.current.pressure} mbar`}</Text>
       </div>
 
       <div>
         <img src="https://img.icons8.com/office/80/000000/humidity.png"/>
         <Text className="label">Humidity</Text>
-        <Text className="value">{weatherData.current.humidity}</Text>
+        <Text className="value">{`${weatherData.current.humidity}%`}</Text>
       </div>
 
       <div>
         <img src="https://img.icons8.com/office/80/000000/dew-point.png"/>
         <Text className="label">Dew point</Text>
-        <Text className="value">{weatherData.current.dew_point}</Text>
+        <Text className="value">{`${weatherData.current.dew_point}\u00B0`}</Text>
       </div>
 
       <div>
@@ -75,7 +76,7 @@ function CurrentWeather() {
       <div>
         <img src="https://img.icons8.com/office/80/000000/wind-gauge.png"/>
         <Text className="label">Wind speed</Text>
-        <Text className="value">{weatherData.current.wind_speed}</Text>
+        <Text className="value">{`${(weatherData.current.wind_speed*3.6).toFixed(2)} Km/h`}</Text>
       </div>
 
       <div>
@@ -91,82 +92,66 @@ function CurrentWeather() {
       </div>
 
     </SimpleGrid>
-
+    <Space h="xl"/>
 
   </>)
 }
 
+
 function HourlyWeather() {
 
   const {weatherData} = useGlobalContext()
-  const hour_array = weatherData.hourly
-  const hours = hour_array.map((el)=> new Date(el.dt*1000).toLocaleTimeString())
+  const hour_array = weatherData.hourly.slice(0,25)
+  const hours = hour_array.map((el)=> new Date(el.dt*1000).toLocaleTimeString().slice(0,-9)+" "+new Date(el.dt*1000).toLocaleTimeString().slice(-2))
   const htemps = hour_array.map((el)=> el.temp)
-
-
-  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, CTitle, Tooltip, Legend);
-  // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'aug', 'sep'];
-  const labels = hours
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Temperature',
-        //data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-        data: htemps,
-        borderColor: 'rgb(77,88,241)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-    ],
+  const fhtemps = htemps.map((el)=>`${el}\u00B0C`)
+  const data = []
+  for (let i = 0; i < hours.length; i++){
+    data[i] = {hour:hours[i], temp: htemps[i], ftemp: fhtemps[i]}
   }
-  const options = {
-    responsive: false,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Hourly temperature data',
-      },
-    },
-  };
 
-  return(<div>
+
+
+  return(<>
+    <Title order={3} sx={{paddingTop:15,paddingBottom:10}}>Hourly temperature</Title>
+
     <div className="FakeLine" >
-      <Line options={options} data={data} height={400} width={1400} />
+      <LineChart width={1965} height={400} data={data}>
+        <Line type="monotone" dataKey="temp" stroke="#8884d8" />
+        <XAxis dataKey="hour" />
+        <YAxis />
+        <Tooltip />
+      </LineChart>
+
+      <div style={{overflow:"visible", width:1990, marginLeft:22 }}>
+        {hour_array.map((el)=>{
+          return <img style={{width:64, marginLeft:14}} src={`https://openweathermap.org/img/wn/${el.weather[0].icon}@2x.png`}/>
+        })}
+      </div>
     </div>
-  </div>)
+
+  </>)
 }
 
 
-/*const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
-    },
-  },
-};*/
+function WeeklyWeather() {
+  const {weatherData} = useGlobalContext()
 
-/*const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-/!*    {
-      label: 'Dataset 2',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },*!/
-  ],*/
+  return(<>
+    <Space h="xl"/>
+    <Title order={2}>This week</Title>
+
+    {weatherData.daily.slice(1,8).map((element)=>{
+      return <div className="weekDayDiv">
+        <img src={`https://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`} />
+        <Text className="weekDayDesc">{element.weather[0].main}</Text>
+        <Text className="weekDay">{new Date(element.dt*1000).toDateString().slice(0,-5)}</Text>
+        <div className="weekTemp">
+          <img style={{width:28}} src="https://img.icons8.com/office/80/000000/thermometer.png"/>
+          <Text className="weekTempText">{`${element.temp.max}\u00B0C | ${element.temp.min}\u00B0C`}</Text>
+        </div>
+      </div>
+    })}
+
+  </>)
+}

@@ -16,7 +16,7 @@
 
 .App-header {
     position: relative;
-    background-color: blueviolet;
+    background-color: #489fb5;
     height: 95px;
     display: flex;
     /*flex-direction: column;*/
@@ -35,21 +35,58 @@
     width: 400px;
     position: absolute;
     top: 10px;
-    right: 80px;
+    right: 40px;
 }
 
-.mantine-Button-root {
+@media screen and (max-width: 900px){
+    #searchform {
+        /*display: flex;*/
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 15px;
+    }
+/*    .currentLocation {
+        position: absolute;
+        bottom: 0;
+        left: 200px;
+    }*/
+    .App-header{
+        height: 150px;
+    }
+}
+
+/*.currentLocation {
+    position: absolute;
+    top: 38px;
+    right: 470px;
+}*/
+
+/*@media screen and (max-width: 350px){
+    !*#searchform {
+        width: 250px;
+    }*!
+    .autocomplete {
+        width: 250px;
+    }
+}*/
+
+/*.autocomplete {*/
+/*    width: 300px;*/
+/*}*/
+
+/*.mbutton {
     position: absolute;
     top: 20px;
     left: 310px;
     margin-block-start: 8px;
     padding: 6px;
-}
-.mantine-Button-label {
+}*/
+/*.mantine-Button-label {
     position: relative;
     bottom: 1px;
     right: 2px;
-}
+}*/
 
 .app {
     /*background-color: #EEF4FA;*/
@@ -57,10 +94,12 @@
 
 footer {
     border-style: solid;
+    border-color: blueviolet;
+    border-width: 2px;
+    border-radius: 8px;
     margin-top: 5px;
     padding: 5px;
-    color: blueviolet;
-    background-color: aqua;
+    background-color: #a8dadc;
     position: sticky;
     bottom: 0;
     z-index: -1;

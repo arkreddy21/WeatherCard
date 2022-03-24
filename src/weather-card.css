@@ -1,8 +1,21 @@
 
 .weather-card {
-    background-color: aliceblue;
+    background-color: #a8dadc;
     border-radius: 8px;
     padding: 12px;
+}
+.mainInfo {
+    position: relative;
+}
+.mainInfo > .value {
+    position: absolute;
+    left: 180px;
+    top: 30%;
+}
+.mainInfo > .desc {
+    position: absolute;
+    left: 180px;
+    top: 45%;
 }
 
 
@@ -19,7 +32,6 @@
     position: absolute;
     top: 60px;
     left: 90px;
-    color: gray;
 }
 
 .current-weather-grid > div > .value {
@@ -36,4 +48,36 @@
     /*overflow: scroll;*/
     overflow-x: scroll;
     /*overflow-y: scroll;*/
+}
+
+.weekDayDiv {
+    position: relative;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 8px;
+    border-color: blueviolet;
+    padding-bottom: 8px;
+    margin-bottom: 6px;
+}
+.weekDayDesc {
+    position: absolute;
+    left: 100px;
+    top: 45px;
+}
+
+.weekDay {
+    position: absolute;
+    left: 100px;
+    top: 20px;
+}
+.weekTemp {
+    position: absolute;
+    left: 100px;
+    top: 72px;
+}
+.weekTempText {
+    width: 150px;
+    position: absolute;
+    top: 1px;
+    left: 30px;
 }

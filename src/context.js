@@ -11,7 +11,7 @@ const AppProvider = ({children}) => {
     "timezone": "Etc/GMT",
     "timezone_offset": 0,
     "current": {
-      "dt": 1644125406,
+      "dt": 0,
       "sunrise": 1644127838,
       "sunset": 1644171452,
       "temp": 26.51,
@@ -1466,7 +1466,7 @@ const AppProvider = ({children}) => {
   }
 
   const [weatherData, setWeatherData] = useState(data)
-  const [currentLocale,setCurrentLocale] = useState('default')
+  const [currentLocale,setCurrentLocale] = useState('Delhi, IN')
 
   const apiKey = process.env.REACT_APP_API_KEY
 
